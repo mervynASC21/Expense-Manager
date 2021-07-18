@@ -11,7 +11,9 @@ html {
   --color-body: #918ca4;
 }
 
-body {
+*,
+*::after,
+::before body {
   font-family: Inter, "Arial", "Helvetica", sans-serif;
   font-size: 2.4rem;
   line-height: 1.5;
@@ -136,5 +138,69 @@ a {
 @media screen and (min-width: 1024px) {
   .list--tick .list__item {
     padding-left: 0;
+  }
+}
+
+/* Icons */
+
+/* buttons */
+.button {
+  border-radius: 40px;
+  border: 0;
+  font-weight: 600;
+  color: white;
+  padding: 15px 60px;
+  font-size: 1.5rem;
+  margin: 1rem 0;
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  transition: background 0.5s;
+}
+
+.button--primary {
+  background: var(--color-primary);
+}
+
+.button--primary:hover {
+  background: #3a8ffd;
+}
+
+.button--secondary {
+  background: var(--color-secondary);
+}
+.button--secondary:hover {
+  background: #00c8eb;
+}
+
+.button--accent {
+  background: var(--color-accent);
+  padding: 17px 40px;
+  font-size: 1.3rem;
+}
+
+.button--accent:hover {
+  background: #ec3000;
+}
+
+.button--outline {
+  background: #fff;
+  color: var(--color-heading);
+  border: 2px solid var(--color-heading);
+}
+
+.button--outline:hover {
+  background: var(--color-heading);
+  color: #fff;
+}
+
+.button--block {
+  width: 100%;
+  display: inline-block;
+}
+
+@media screen and (min-width: 1024px) {
+  .button {
+    font-size: 1.5rem;
   }
 }
