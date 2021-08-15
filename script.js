@@ -1,3 +1,44 @@
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+var firebaseConfig = {
+apiKey: "AIzaSyBu3o88ZXsrroHmf1PiFeWMSHhY9jo90oQ",
+authDomain: "expense-tracker-a7264.firebaseapp.com",
+projectId: "expense-tracker-a7264",
+storageBucket: "expense-tracker-a7264.appspot.com",
+messagingSenderId: "672380797363",
+appId: "1:672380797363:web:66d7ea25168cfe38d38bc6",
+measurementId: "G-1CEQ7SZ8KQ"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+
+
+const textElement = document.querySelector("#text")
+const amountElem = document.querySelector("#amount")
+const buttonref = document.querySelector("#button")
+buttonref.addEventListener("click", updateDB);
+
+const db = firebase.database().ref();
+
+function updateDB(e){
+    e.preventDefault();
+    const text = textElement.value;
+    const amount = amountElem.value;
+
+    textElement.value = ""
+    amountElem.value = '';
+
+    let value = {
+        Text: text,
+        Amount: amount
+    }
+
+    db.push(value);
+}
+
+
+
 const date = new Date();
 let month = date.getMonth() + 1;
 let day = date.getDay() + 15;
@@ -33,3 +74,5 @@ button.addEventListener('click', function() {
     body.appendChild(plan)
 
 })
+
+
