@@ -13,25 +13,68 @@ measurementId: "G-1CEQ7SZ8KQ"
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-
+// const categories = 
 const textElement = document.querySelector("#text")
 const amountElem = document.querySelector("#amount")
-const buttonref = document.querySelector("#button")
+const category2 = document.getElementById("category");
+const buttonref = document.querySelector("#button");
 buttonref.addEventListener("click", updateDB);
 
+let history = document.querySelector(".history");
 const db = firebase.database().ref();
 
+function createPost(text, categorical, amount){
+    let div = document.createElement("div")
+    div.setAttribute("id", "history-1");
+    let p = document.createElement("p");
+    p.setAttribute("id", "p1");
+    let p2 = document.createElement("p");
+    p2.setAttribute("id", "p2");
+    let p3 = document.createElement("p");
+    p3.setAttribute("id", "p3");
+
+    p.textContent = text;
+    p2.textContent = "Category: " + categorical;
+    p3.textContent = amount;
+
+    div.appendChild(p);
+    div.appendChild(p2);
+    div.appendChild(p3);
+    if (history.innerHTML === ""){
+        console.log(true);
+    }
+    history.insertBefore(div, history.firstChild);
+
+    // for(i = 0; i < 1; i++){
+    //     console.log(history);
+    // }
+}
+
+function getPosts(){
+    db.on("child_added", function(rowData){
+        let row = rowData.val();
+        createPost(
+            row.Text,
+            row.Categories,
+            row.Amount
+        );
+    })
+}
+
+getPosts();
 function updateDB(e){
     e.preventDefault();
     const text = textElement.value;
     const amount = amountElem.value;
+    const categ = category2.value;
 
     textElement.value = ""
     amountElem.value = '';
 
     let value = {
         Text: text,
-        Amount: amount
+        Amount: amount,
+        Categories: categ
     }
 
     db.push(value);
@@ -74,5 +117,3 @@ button.addEventListener('click', function() {
     body.appendChild(plan)
 
 })
-
-
