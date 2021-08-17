@@ -126,38 +126,40 @@ $("#logout").click(function(){
     console.log("logged out")
 })
 
-const date = new Date();
-let month = date.getMonth() + 1;
-let day = date.getDay() + 15;
-let year = date.getFullYear();
-document.querySelector(".date").innerHTML = "date created: " + month + "/" + day + '/' + year;
-
-let button = document.querySelector('.btn-rec');
-
-button.addEventListener('click', function() {
-    plan = document.createElement('div')
-    plan.className = 'plan';
-    card = document.createElement('div');
-    card.className = 'card';
-    header = document.createElement('header');
-    header.className = 'card__header';
-    h3 = document.createElement('h3');
-    h3.className = 'plan__name';
-    h3.innerHTML = 'newRecommendation';
-    // date = document.createElement('p');
-    // date.className = 'date'
-    // date.innerHTML = "date created: " + month + "/" + day + '/' + year;
-    description = document.createElement('p');
-    description.className = 'plan__description';
-
-    header.appendChild(description)
-    //header.appendChild(date)
-    header.appendChild(h3);
-    card.appendChild(header);
-    plan.appendChild(card);
-
-    body = document.querySelector('body');
-
-    body.appendChild(plan)
-
-})
+    const date = new Date();
+    let month = date.getMonth() + 1;
+    let day = date.getDay() + 15;
+    let year = date.getFullYear();
+    let current_date = "date created: " + month + "/" + day + '/' + year;
+    document.querySelector(".date").innerHTML = current_date
+    
+    let button = document.querySelector('.btn-rec');
+    
+    button.addEventListener('click', function() {
+        plan = document.createElement('div')
+        plan.className = 'plan';
+        card = document.createElement('div');
+        card.className = 'card';
+        header = document.createElement('header');
+        header.className = 'card__header';
+        h3 = document.createElement('h3');
+        h3.className = 'plan__name';
+        h3.innerHTML = 'newRecommendation';
+        rec_date = document.createElement('p');
+        rec_date.className = 'date'
+        rec_date.innerHTML = current_date
+        description = document.createElement('p');
+        description.className = 'plan__description';
+        description.innerHTML = "this is placeholder text for when we can dynamically add the user's recommendation data "
+    
+        plan.appendChild(card);
+        card.appendChild(header);
+        header.appendChild(h3);
+        header.appendChild(rec_date)
+        header.appendChild(description)
+    
+        body = document.querySelector('body');
+    
+        body.appendChild(plan)
+    
+    })
