@@ -22,6 +22,9 @@ buttonref.addEventListener("click", updateDB);
 
 let history = document.querySelector(".history");
 const db = firebase.database().ref();
+const auth = firebase.auth();
+var currentUser = {}
+
 
 function createPost(text, categorical, amount){
     let div = document.createElement("div")
@@ -58,9 +61,7 @@ function createPost(text, categorical, amount){
     }
     history.insertBefore(div, history.firstChild);
 
-    // for(i = 0; i < 1; i++){
-    //     console.log(history);
-    // }
+
 }
 
 function deletePosts() {
@@ -69,18 +70,37 @@ function deletePosts() {
     })
 }
 
-function getPosts(){
-    db.on("child_added", function(rowData){
-        let row = rowData.val();
-        createPost(
-            row.Text,
-            row.Categories,
-            row.Amount
-        );
-    })
-}
+// function getPosts(){
+//     db.on("child_added", function(rowData){
+//         let row = rowData.val();
+//         console.log(row)
+//         createPost(
+//             row.Text,
+//             row.Categories,
+//             row.Amount
+//         );
+//     })
+// }
 
-getPosts();
+// getPosts();
+// let userId;
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      var uid = user.uid;
+      var email = user.email;
+      currentUser = user;
+      writeUserData(user)
+      // ...
+    } else {
+      // User is signed out
+      // ...
+    }
+});
+
+
 function updateDB(e){
     e.preventDefault();
     const text = textElement.value;
@@ -91,15 +111,20 @@ function updateDB(e){
     amountElem.value = '';
 
     let value = {
+        userId: currentUser.uid,
         Text: text,
         Amount: amount,
         Categories: categ
     }
-
-    db.push(value);
+    firebase.database().ref("heroes/" + value.userId).set(value)
+    firebase.database().ref("users/" + currentUser.uid + /heroes/ + value.userId).set(value)
+    createPost(value.Text, value.Categories, value.Amount);
 }
 
-
+$("#logout").click(function(){
+    auth.signOut();
+    console.log("logged out")
+})
 
 const date = new Date();
 let month = date.getMonth() + 1;
