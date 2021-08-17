@@ -36,12 +36,16 @@ $("#logout").click(function(){
 })
 
 function createNewUser(email, password){
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error){
-        var errorCode = error.errorCode;
-        var errorMessage = error.message;
-        console.log(errorMessage);
-        alert(errorMessage);
-    })
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+        .then(cred => {
+            window.location.href = "index2.html";
+        })
+        .catch(function(error){
+            var errorCode = error.errorCode;
+            var errorMessage = error.message;
+            console.log(errorMessage);
+            alert(errorMessage);
+        })
 }
 
 function signIn(email, password){
